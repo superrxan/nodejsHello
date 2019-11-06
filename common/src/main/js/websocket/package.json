@@ -1,0 +1,13 @@
+{
+  "name": "websocket",
+  "version": "1.0.0",
+  "description": "websocket server and client",
+  "author": "Carlos Reif",
+  "license": "MIT",
+  "main": "./index.js",
+  "dependencies": {
+    "debug": "^4.1.1",
+    "express": "^4.16.4",
+    "ws": "^6.2.0"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "record",
+  "name": "RawAdvertisemtentsKey",
+  "namespace": "raven.ble.advertisements.raw.key",
+  "doc": "Raw advertisements payload key",
+  "fields": [
+  {
+    "name": "address",
+    "type": "string",
+    "doc": "Device Address"
+  },
+  {
+    "name": "addressType",
+    "type": {"type": "enum", "name": "AddressType", "symbols": ["public", "random"] },
+    "doc": "Device Address Type"
+  }]
+}

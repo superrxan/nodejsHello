@@ -1,0 +1,51 @@
+syntax = "proto2";
+
+package aruba_raw_ble;
+
+message Meta {
+  required uint64 version = 1;
+  optional string access_token = 2;
+}
+
+message Reporter {
+  optional string name = 1;
+  optional bytes mac = 2;
+  optional string ipv4 = 3;
+  optional string ipv6 = 4;
+  optional string hwType = 5;
+  optional string swVersion = 6;
+  optional string swBuild = 7;
+  optional uint64 time = 8;
+}
+
+message Rssi { optional sint32 last = 1; }
+
+message PayloadAttrs {
+  optional bytes advData = 1;
+  optional bytes scnResp = 2;
+}
+
+message Beacons { optional PayloadAttrs payload = 3; }
+
+message Stats {
+  optional uint64 uptime = 1;
+  optional uint64 adv_cnt = 2;
+  required uint32 frame_cnt = 4;
+}
+
+message Reported {
+  required bytes mac = 1;
+  optional uint64 lastSeen = 7;
+  // reserved 8;
+  optional Rssi rssi = 10;
+  repeated Beacons beacons = 12;
+  optional sint32 txpower = 13;
+  // reserved 15;
+  optional Stats stats = 16;
+}
+
+message Telemetry {
+  required Meta meta = 1;
+  required Reporter reporter = 2;
+  repeated Reported reported = 3;
+}

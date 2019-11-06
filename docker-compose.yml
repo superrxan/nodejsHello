@@ -1,0 +1,24 @@
+version: '3'
+services:
+  ws-receiver-ap:
+    image: ${DOCKER_REGISTRY}raven/ws-receiver:${RAVEN_VERSION}
+    restart: unless-stopped
+    ports: 
+      - "5011:5011"
+    depends_on:
+      - kafka
+      - kafka-schema-registry
+    environment:
+      - DEBUG=config,kafka,schema-registry,avro-handler
+      - RECEIVER_PORT=5011
+      - KAFKA_BROKERS=kafka:9092
+      - KAFKA_SCHEMA_REGISTRY=http://kafka-schema-registry:8081
+      - PROTO_NAME=aruba_raw_ble.Telemetry
+      - PROTO_SCHEMA=${AP_RAW_PROTO}
+      - AVRO_KEY_SCHEMA=${ADV_KEY_AVSC}
+      - AVRO_VALUE_SCHEMA=${ADV_VALUE_AVSC}
+      - KAFKA_TOPIC_OUT=bleAdvertisementsAvroV2
+      - CONVERTER_NAME=AP
+      - CONVERTER_PARAMS={"OVERWRITE_TIMESTAMP":false}
+      - CERTIFICATE_PATH=cert/ws-receiver-cert.pem
+      - KEY_PATH=cert/ws-receiver-key.pem

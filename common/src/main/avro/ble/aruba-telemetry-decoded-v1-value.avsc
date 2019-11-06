@@ -1,0 +1,60 @@
+{
+  "type": "record",
+  "name": "EnrichedAdvertisemtentsValue",
+  "namespace": "raven.ble.advertisements.enriched.value",
+  "doc": "Enriched advertisements payload",
+  "fields": [
+  {
+    "name": "address",
+    "type": "string",
+    "doc": "Device Address"
+  },
+  {
+    "name": "addressType",
+    "type": {"type": "enum", "name": "AddressType", "symbols": ["public", "random"]},
+    "doc": "Device Address Type"
+  },
+  {
+    "name": "scannerUUID",
+    "type": "string",
+    "doc": "Scanner UUID"
+  },
+  {
+    "name": "scannerAddress",
+    "type": "string",
+    "doc": "Device Address"
+  },
+  {
+    "name": "rssi",
+    "type": "float",
+    "doc": "RSSI"
+  },
+  {
+    "name": "capturedDatetime",
+    "type": "string",
+    "doc": "Captured Timestamp in String ISO 8601"
+  },
+  {
+    "name": "capturedTimestamp",
+    "type": {
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    },
+    "doc": "Captured timestamp of payload in milliseconds"
+  },
+  {
+    "name": "temperature",
+    "type": "float",
+    "doc": "Hanvit Temperature"
+  },
+  {
+    "name": "humidity",
+    "type": "float",
+    "doc": "Hanvit humidity"
+  },{
+    "name": "battery",
+    "type": "float",
+    "doc": "Hanvit Battery"
+  }]
+}
+

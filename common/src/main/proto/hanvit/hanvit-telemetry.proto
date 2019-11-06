@@ -1,0 +1,21 @@
+syntax = "proto2";
+
+package hanvit_telemetry;
+
+message Reporter {
+    required string address     = 1;
+    required float  rssi        = 2;
+    required string lastSeen    = 3;
+}
+
+message Telemetry {
+  required string       address             = 1;
+  repeated Reporter     reporters           = 2;
+  required string       timestamp           = 3;
+  required string       startTime           = 4;
+  required string       endTime             = 5;
+  required uint32       timeWindowSec       = 6;
+  required float        batteryLevel        = 7;
+  required float        humidity            = 8;
+  required float        temperature         = 9;
+}

@@ -1,0 +1,464 @@
+syntax = "proto2";
+
+package aruba_telemetry;
+
+enum ActionStatus {
+
+    failureGeneric = 0;
+    success = 1;
+    deviceNotFound = 2;
+    apNotFound = 3;
+    actionTimeout = 4;
+    connectionAborted = 5;
+    authenticationFailed = 6;
+    notConnected = 7;
+    previousActionFailed = 8;
+    alreadyConnected = 9;
+    noMoreConnectionSlots = 10;
+    decodingFailed = 11;
+    characteristicNotFound = 12;
+    invalidRequest = 13;
+    gattError = 14;
+}
+
+message ActionResult {
+
+    optional string action_id = 1;
+    optional ActionType type = 2;
+    optional bytes device_mac = 3;
+    optional ActionStatus status = 4;
+    optional string status_string = 5;
+}
+
+enum deviceClassEnum {
+
+    unclassified = 0;
+    arubaBeacon = 1;
+    arubaTag = 2;
+    zfTag = 3;
+    stanleyTag = 4;
+    virginBeacon = 5;
+    enoceanSensor = 6;
+    enoceanSwitch = 7;
+    iBeacon = 8;
+    allBleData = 9;
+    RawBleData = 10;
+    eddystone = 11;
+    assaAbloy = 12;
+    arubaSensor = 13;
+    abbSensor = 14;
+    wifiTag = 15;
+    wifiAssocSta = 16;
+    wifiUnassocSta = 17;
+    mysphera = 18;
+    sBeacon = 19;
+}
+
+enum ActionType {
+
+    bleConnect = 0;
+    bleDisconnect = 1;
+    gattRead = 2;
+    gattWrite = 3;
+    gattWriteWithResponse = 4;
+    gattNotification = 5;
+}
+
+enum NbTopic {
+
+    telemetry = 0;
+    actionResults = 1;
+    characteristics = 2;
+    bleData = 3;
+    wifiData = 4;
+    deviceCount = 5;
+    status = 6;
+}
+
+enum SbTopic {
+
+    actions = 0;
+    config = 1;
+    sbStatus = 2;
+}
+
+message Meta {
+
+    required uint64 version = 1;
+    optional string access_token = 2;
+    optional NbTopic nb_topic = 3;
+    optional SbTopic sb_topic = 4;
+}
+
+enum BleFrameType {
+
+    adv_ind = 0;
+    adv_direct_ind = 1;
+    adv_nonconn_ind = 2;
+    scan_rsp = 4;
+    adv_scan_ind = 6;
+}
+
+message BleData {
+
+    optional bytes mac = 1;
+    optional BleFrameType frame_type = 2;
+    optional bytes data = 3;
+    optional sint32 rssi = 4;
+}
+
+enum CharProperty {
+
+    broadcast = 0;
+    read = 1;
+    writeWithoutResponse = 2;
+    writeWithResponse = 3;
+    notify = 4;
+    indicate = 5;
+    signedWrite = 6;
+    writeReliable = 7;
+    writeAux = 8;
+}
+
+message Characteristic {
+
+    optional bytes device_mac = 1;
+    optional bytes service_uuid = 2;
+    optional bytes characteristic_uuid = 3;
+    optional bytes value = 4;
+    optional string description = 5;
+    repeated CharProperty properties = 6;
+}
+
+message DeviceCount {
+
+    optional int32 dev_unclassified = 1;
+    optional int32 dev_aruba_beacon = 2;
+    optional int32 dev_aruba_tag = 3;
+    optional int32 dev_zf_tag = 4;
+    optional int32 dev_stanley_tag = 5;
+    optional int32 dev_virgin_beacon = 6;
+    optional int32 dev_enocean_sensor = 7;
+    optional int32 dev_enocean_switch = 8;
+    optional int32 dev_i_beacon = 9;
+    optional int32 dev_all_ble_data = 10;
+    optional int32 dev__raw_ble_data = 11;
+    optional int32 dev_eddystone = 12;
+    optional int32 dev_assa_abloy = 13;
+    optional int32 dev_aruba_sensor = 14;
+    optional int32 dev_abb_sensor = 15;
+    optional int32 dev_wifi_tag = 16;
+    optional int32 dev_wifi_assoc_sta = 17;
+    optional int32 dev_wifi_unassoc_sta = 18;
+    optional int32 dev_mysphera = 19;
+    optional int32 dev_s_beacon = 20;
+}
+
+message Reporter {
+
+    optional string name = 1;
+    optional bytes mac = 2;
+    optional string ipv4 = 3;
+    optional string ipv6 = 4;
+    optional string hw_type = 5;
+    optional string sw_version = 6;
+    optional string sw_build = 7;
+    optional uint64 time = 8;
+}
+
+message Telemetry {
+
+    required Meta meta = 1;
+    required Reporter reporter = 2;
+    repeated Reported reported = 3;
+    repeated ActionResult results = 4;
+    repeated Characteristic characteristics = 5;
+    repeated BleData ble_data = 6;
+    repeated WiFiData wifi_data = 7;
+    optional DeviceCount dev_count = 8;
+    optional Status status = 9;
+}
+
+enum rockerSwitchPosition {
+
+    idle = 0;
+    topPressed = 1;
+    bottomPressed = 2;
+}
+
+message Firmware {
+
+    optional string version = 1;
+    optional string bank_a = 2;
+    optional string bank_b = 3;
+}
+
+message History {
+
+    required uint64 time = 1;
+    required sint32 rssi = 2;
+    optional int32 rx_radio_id = 3;
+    optional int32 antenna = 4;
+}
+
+message Rssi {
+
+    optional sint32 last = 1;
+    optional sint32 avg = 2;
+    optional sint32 max = 3;
+    repeated History history = 4;
+    optional sint32 smooth = 5;
+}
+
+enum CellEvent {
+
+    entry = 0;
+    exit = 1;
+    update = 2;
+    ageout = 3;
+}
+
+message BeaconEvent {
+
+    optional CellEvent event = 1;
+}
+
+message Cell {
+
+    optional bool is_inside = 1;
+    optional float distance = 2;
+}
+
+message Ibeacon {
+
+    required bytes uuid = 1;
+    required uint32 major = 2;
+    required uint32 minor = 3;
+    required sint32 power = 4;
+    optional bytes extra = 5;
+}
+
+message EddyUID {
+
+    required bytes nid = 1;
+    required bytes bid = 2;
+}
+
+message EddyURL {
+
+    required uint32 prefix = 1;
+    required bytes encoded_url = 2;
+}
+
+message Eddystone {
+
+    optional sint32 power = 1;
+    optional EddyUID uid = 2;
+    optional EddyURL url = 3;
+}
+
+message Beacons {
+
+    optional Ibeacon ibeacon = 1;
+    optional Eddystone eddystone = 2;
+}
+
+enum AccelStatus {
+
+    ok = 0;
+    outOfRange = 1;
+    threshold1 = 2;
+    threshold2 = 3;
+}
+
+message Accelerometer {
+
+    required float x = 1;
+    required float y = 2;
+    required float z = 3;
+    optional AccelStatus status = 4;
+}
+
+message RockerSwitch {
+
+    required string id = 1;
+    required rockerSwitchPosition state = 2;
+}
+
+enum Alarm {
+
+    water = 1;
+    smoke = 2;
+    fire = 3;
+    glassbreak = 4;
+    intrusion = 5;
+}
+
+enum ContactPosition {
+
+    open = 1;
+    closed = 2;
+}
+
+message Contact {
+
+    required uint32 id = 1;
+    required ContactPosition state = 2;
+}
+
+message Occupancy {
+
+    optional uint32 level = 1;
+}
+
+enum MechanicalH {
+
+    upToRight = 1;
+    rightToDown = 2;
+    downToLeft = 3;
+    leftToUp = 4;
+    upToLeft = 5;
+    leftToDown = 6;
+    downToRight = 7;
+    rightToUp = 8;
+}
+
+message Sensors {
+
+    optional Accelerometer accelerometer = 1;
+    optional int32 battery = 2;
+    optional float temperature_c = 3;
+    optional int32 humidity = 4;
+    optional float voltage = 5;
+    optional int32 illumination = 6;
+    optional bool motion = 7;
+    optional sint32 current = 8;
+    optional int32 C_o = 9;
+    optional int32 CO2 = 10;
+    optional int32 VO_c = 11;
+    optional float resistance = 12;
+    optional sint32 pressure = 13;
+    repeated Alarm alarm = 14;
+    repeated Contact contact = 15;
+    optional Occupancy occupancy = 16;
+    optional MechanicalH mechanical_handle = 17;
+    optional int32 distance = 18;
+    optional float capacitance = 19;
+}
+
+message Stats {
+
+    optional uint64 uptime = 1;
+    optional uint64 adv_cnt = 2;
+    optional uint32 seq_nr = 3;
+    required uint32 frame_cnt = 4;
+}
+
+enum switchState {
+
+    unknown = 1;
+    on = 2;
+    off = 3;
+}
+
+message Inputs {
+
+    repeated RockerSwitch rocker = 1;
+    repeated switchState switch_index = 2;
+}
+
+message VendorData {
+
+    optional string vendor = 1;
+    required bytes data = 2;
+}
+
+message Reported {
+
+    optional bytes mac = 1;
+    repeated deviceClassEnum device_class = 2;
+    optional string model = 3;
+    optional Firmware firmware = 4;
+    optional string asset_id = 5;
+    optional string public_key = 6;
+    optional uint64 last_seen = 7;
+    optional BeaconEvent bevent = 9;
+    optional Rssi rssi = 10;
+    optional Cell cell = 11;
+    repeated Beacons beacons = 12;
+    optional sint32 txpower = 13;
+    optional Sensors sensors = 14;
+    optional Stats stats = 16;
+    optional Inputs inputs = 17;
+    optional VendorData vendor_data = 18;
+    optional string vendor_name = 19;
+    optional uint64 sensor_timestamp = 20;
+    optional uint32 flags = 21;
+    optional string local_name = 22;
+    optional string identity = 23;
+}
+
+message WiFiData {
+
+    optional bytes mac = 1;
+    repeated deviceClassEnum device_class = 2;
+    optional sint32 rssi = 3;
+    optional bytes rtls_payload = 4;
+}
+
+enum statusValue {
+
+    deviceDisconnected = 0;
+    inactivityTimeout = 1;
+}
+
+message Status {
+
+    optional bytes device_mac = 1;
+    optional statusValue status = 2;
+    optional string status_string = 3;
+}
+
+message Action {
+
+    optional string action_id = 1;
+    optional ActionType type = 2;
+    optional bytes device_mac = 3;
+    optional bytes service_uuid = 4;
+    optional bytes characteristic_uuid = 5;
+    optional uint32 time_out = 6;
+    optional bytes value = 7;
+}
+
+message TransportConfig {
+
+    optional uint32 reporting_period = 1;
+    optional uint32 cell_size = 2;
+}
+
+message Receiver {
+
+    optional bool all = 1;
+    optional bytes ap_mac = 2;
+}
+
+message IotSbMessage {
+
+    required Meta meta = 1;
+    optional Receiver receiver = 2;
+    repeated Action actions = 3;
+    optional TransportConfig config = 4;
+    optional ConnectStatus status = 5;
+}
+
+enum ConnectCode {
+
+    statusOK = 0;
+    tokenExpire = 1;
+}
+
+message ConnectStatus {
+
+    optional ConnectCode connect_code = 1;
+    optional string connect_description = 2;
+}

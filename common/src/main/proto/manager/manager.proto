@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package manager;
+
+service scanner {
+  rpc attach (stream msg) returns (stream msg) {};
+}
+
+message msg {
+  string id = 1;
+  string value = 2;
+  string params = 3;
+}

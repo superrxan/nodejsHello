@@ -1,0 +1,17 @@
+{
+  "type": "record",
+  "name": "EnrichedAdvertisemtentsKey",
+  "namespace": "raven.ble.advertisements.enriched.key",
+  "doc": "Enriched advertisements payload key",
+  "fields": [
+  {
+    "name": "address",
+    "type": "string",
+    "doc": "Device Address"
+  },
+  {
+    "name": "addressType",
+    "type": {"type": "enum", "name": "AddressType", "symbols": ["public", "random"] },
+    "doc": "Device Address Type"
+  }]
+}

@@ -1,0 +1,108 @@
+syntax = "proto3";
+
+package ble;
+
+message Service {
+  string id = 1;
+  message Characteristic {
+    string id = 1;
+    string value = 2;
+    string properties = 3;
+    message Descriptor {
+      string id = 1;
+      string value = 2;
+      string valueStr = 3;
+      string error = 4;
+    }
+    repeated Descriptor descriptors = 4;
+    string valueStr = 5;
+    string error = 6;
+  }
+  repeated Characteristic characteristics = 2;
+}
+
+message Location {
+  string locationId = 1 [deprecated=true];
+  double lat = 2;
+  double lon = 3;
+}
+
+message Scanner {
+  string UUID = 1;
+  string address = 2;
+  string type = 3;
+  string version = 4;
+  string filters = 5;
+  Location location = 6;
+  string addressType = 7;
+  string lmpVersion = 8;
+  string lmpSubVersion = 9;
+  string manufacturer = 10;
+  string hostname = 11;
+}
+
+message AdvertisementScan  {
+  uint32 numPkts = 1;
+  Scanner scanner = 2;
+
+  message AdvPayloads {
+    string timestamp = 1;
+    string address = 2;
+    string addressType = 3;
+    int32 rssi = 4;
+    bool connectable = 5;
+    int32 type = 13;
+
+    message RawData {
+      uint32 length = 1;
+      string base64 = 2;
+      string hex = 3;
+    }
+    RawData rawData = 6;
+
+    RawData scanData = 9;
+    RawData responseData = 10;
+    string timestampResponse = 11;
+
+    bool hasScanResponse = 12;
+  }
+
+  repeated AdvPayloads advPayloads = 3;
+}
+
+message AttributesScan {
+  Scanner scanner = 1;
+  string timestamp = 2;
+  string address = 3;
+  string addressType = 4;
+  int32 rssi = 5;
+  bool connectable = 6;
+  repeated Service services = 7;
+}
+
+message InspectionScan {
+  message InspectionData {
+    message Command {
+      string name = 1;
+    }
+    message CommandResponse {
+      message ResponseData {
+        string key = 1;
+        string value = 2;
+      }
+      string name = 1;
+      repeated ResponseData data = 2;
+      string dataRaw = 3;
+    }
+    string layer = 1;
+    Command cmd = 2;
+    CommandResponse cmdResponse = 3;
+  }
+  Scanner scanner = 1;
+  string iUUID = 2;
+  string address = 3;
+  string addressType = 7;
+  string timestamp = 4;
+  string status = 5;
+  InspectionData iData = 6;
+}

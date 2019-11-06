@@ -1,0 +1,16 @@
+**/node_modules/
+**/build/
+**/lib/binding/
+**/*.log
+**/README*
+**/.git
+**/npm-debug.log*
+**/.npm
+**/.eslintcache
+**/.cache
+**/.DS_Store
+**/.gitignore
+**/Dockerfile
+**/docker-compose*.yml
+**/*.avsc
+**/*.proto

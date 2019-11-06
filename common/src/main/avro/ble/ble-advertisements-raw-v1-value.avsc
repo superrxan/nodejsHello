@@ -1,0 +1,114 @@
+{
+  "type": "record",
+  "name": "RawAdvertisementsValue",
+  "namespace": "raven.ble.advertisements.raw.value",
+  "doc": "Raw advertisements data",
+  "fields": [
+  {
+    "name": "address",
+    "type": "string",
+    "doc": "Device Address"
+  },
+  {
+    "name": "addressType",
+    "type": {"type": "enum", "name": "AddressType", "symbols": ["public", "random"]},
+    "doc": "Device Address Type"
+  },
+  {
+    "name": "scannerUUID",
+    "type": "string",
+    "doc": "Scanner UUID"
+  },
+  {
+    "name": "scannerAddress",
+    "type": "string",
+    "doc": "Device Address"
+  },
+  {
+    "name": "rssi",
+    "type": "float",
+    "doc": "RSSI"
+  },
+  {
+    "name": "connectable",
+    "type": "boolean",
+    "doc": "Indicator if device is connectable"
+  },
+  {
+    "name": "hasScanResponse",
+    "type": "boolean",
+    "doc": "Indicator if device has Scan Response payload"
+  },
+  {
+    "name": "capturedDatetime",
+    "type": "string",
+    "doc": "Captured Timestamp in String ISO 8601"
+  },
+  {
+    "name": "capturedResponseDatetime",
+    "type": ["string", "null"],
+    "doc": "Captured response Timestamp in String ISO 8601"
+  },
+  {
+    "name": "receivedDatetime",
+    "type": "string",
+    "doc": "Received Timestamp in String ISO 8601"
+  },
+  {
+    "name": "capturedTimestamp",
+    "type": {
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    },
+    "doc": "Captured timestamp of payload in milliseconds"
+  },
+  {
+    "name": "capturedResponseTimestamp",
+    "type": [{
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    }, "null"],
+    "doc": "Captured response timestamp of payload in milliseconds"
+  },
+  {
+    "name": "receivedTimestamp",
+    "type": {
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    },
+    "doc": "Received timestamp of payload received in the source in milliseconds"
+  },
+  {
+    "name": "rawPayload",
+    "type": "string",
+    "doc": "Raw Payload in Hex String"
+  },
+  {
+    "name": "rawPayloadLength",
+    "type": "int",
+    "doc": "Raw Payload Length",
+    "default": 0
+  },
+  {
+    "name": "scanPayload",
+    "type": "string",
+    "doc": "First Raw Payload in Hex String"
+  },
+  {
+    "name": "scanPayloadLength",
+    "type": "int",
+    "doc": "First Raw Payload Length",
+    "default": 0
+  },
+  {
+    "name": "responsePayload",
+    "type": ["string", "null"],
+    "doc": "Scan Response Raw Payload in Hex String"
+  },
+  {
+    "name": "responsePayloadLength",
+    "type": "int",
+    "doc": "Scan Response Raw Payload Length",
+    "default": 0
+  }]
+}
