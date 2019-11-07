@@ -49,16 +49,12 @@ class ConverterApRaw {
 			// collection <reporter mac>
 			// document   <protobufObj>
 
-			//this.mongoClient.SAVE2DB()
-
 			this.mongoClient.SAVE2DB(expName, reporter.macAscii , PerProApValue);
-
-			//console.log( '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@', JSON.stringify(protobufObj.expName), JSON.stringify(reporter.macFormatted));
 
 			//this.mongoClient.SAVE2DB(expName.toString(), reporter.macAscii.toString(), {id:2});
 			debug(JSON.stringify(expName), JSON.stringify(reporter.macFormatted), PerProApValue);
 
-			if (this.overwriteTimestamp == 0) {
+			if (this.overwriteTimestamp === 0) {
 				reporter.time = new Long(reporter.time).toNumber() * 1000;
 			}
 			else {

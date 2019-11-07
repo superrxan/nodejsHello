@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<% include ../partials/head %>
+</head>
+<body class="container">
+
+	<header>
+		<% include ../partials/header %>
+	</header>
+
+	<main>
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="jumbotron">
+
+					<form method="post" action="/about">
+						<div class="form-group">
+							<label>Experiment Name</label>
+							<label>
+								<input type="text" class="form-control" name="expName">
+							</label>
+						</div>
+
+						<div class="form-group">
+							<label>Number</label>
+							<label>
+								<input type="number" class="form-control" name="repNum">
+							</label>
+						</div>
+
+						<div class="form-group">
+							<label>IoT Devices</label>
+							<label>
+								<select name = "iotDevices" class="form-control" >
+									<% for (var i =0; i<5; i++) { %>
+										<option value=<%=i %>> <%= i%> </option>
+									<% }%>
+								</select>
+							</label>
+						</div>
+
+						<button type="submit" class="btn btn-primary btn-lg">Submit</button>
+						<!---
+						<a class="btn btn-default" href="/about">Close</a>
+						--->
+					</form>
+
+					<!---
+					<p><a class="btn btn-primary btn-lg"
+						  href="http://www.w3school.com.cn"
+						  role="button">学习更多
+						</a>
+					</p>
+					--->
+				</div>
+
+			</div>
+
+			<div class="col-sm-8">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>IoT data</th>
+							<th></th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr>
+							<th>Name</th>
+							<th>Telephone</th>
+						</tr>
+
+						<% drinks.forEach(function (drink) { %>
+							<tr>
+								<th> <%= drink.name %> </th>
+					        	<th><%= drink.drunkness%></th>
+							</tr>
+						<% }) %>
+					</tbody>
+
+				</table>
+			</div>
+		</div>
+	</main>
+
+	<footer>
+		<% include ../partials/footer %>
+	</footer>
+
+</body>
+</html>
