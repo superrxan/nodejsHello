@@ -24,7 +24,7 @@
     "quick-lru": "^3.0.0",
     "uuid": "^3.3.2",
     "websocket": "file:./common/src/main/js/websocket",
-    "ws": "^6.2.0"
+    "ws": "^7.4.6"
   },
   "devDependencies": {
     "eslint": "^5.9.0",
