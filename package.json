@@ -20,7 +20,7 @@
     "prom-client": "^11.2.1",
     "mongodb": "^3.0.3",
     "prometheus-gc-stats": "^0.6.1",
-    "protobufjs": "^6.8.8",
+    "protobufjs": "^6.11.3",
     "quick-lru": "^3.0.0",
     "uuid": "^3.3.2",
     "websocket": "file:./common/src/main/js/websocket",
